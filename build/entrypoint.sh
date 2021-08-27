@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# setup ssh
+ssh-keygen -A
+/usr/sbin/sshd -e "$@"
+
 sed "s/^Port .*$/Port 8888/" -i /etc/tinyproxy.conf
 /usr/bin/tinyproxy -c /etc/tinyproxy.conf
 

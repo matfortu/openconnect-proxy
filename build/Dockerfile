@@ -17,11 +17,16 @@ RUN apk add --no-cache ca-certificates wget \
     && cd microsocks-1.0.1 \
     && make \
     && make install \
+    # configure ssh server
+    && apk add --no-cache openssh \
+    && sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config \
+    && sed -i "s/^AllowTcpForwarding .*$/AllowTcpForwarding yes/" /etc/ssh/sshd_config \
+    && echo "root:vpnproxy" | chpasswd \
     # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
     && apk add --no-cache python3-dev py3-pip bind-tools && pip3 install --upgrade pip \
     && pip3 install vpn-slice \
     # get totp tool
-    && apk add oath-toolkit-oathtool \
+    && apk add --no-cache oath-toolkit-oathtool \
     && apk del .build-deps wget
 
 # Use an up-to-date version of vpnc-script
@@ -36,5 +41,6 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 8888
 EXPOSE 8889
+EXPOSE 22
 
 ENTRYPOINT ["/entrypoint.sh"]
