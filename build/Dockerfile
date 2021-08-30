@@ -1,5 +1,5 @@
 FROM alpine:edge
-LABEL org.opencontainers.image.authors="Wolfgang Klinger <wolfgang@wazum.com>"
+LABEL maintainer="Jesse Kawell"
 
 RUN apk add --no-cache libcrypto1.1 libssl1.1 libstdc++ --repository http://dl-cdn.alpinelinux.org/alpine/edge/main
 RUN apk add --no-cache oath-toolkit-libpskc --repository http://dl-cdn.alpinelinux.org/alpine/edge/community
