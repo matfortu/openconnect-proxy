@@ -67,20 +67,20 @@ In daemon mode you can view the stderr log with `docker logs`:
 # Use container with docker-compose
 
 ```yml
-	vpn:
-	  container_name: openconnect_vpn
-	  image: jakawell/openconnect-proxy:latest
-	  privileged: true
-	  env_file:
-	    - .env
-	  ports:
-	    - "8888:8888"
-	    - "8889:8889"
-			- "2222:22"
-	  cap_add:
-	    - NET_ADMIN
-	  networks:
-	    - mynetwork
+vpn:
+	container_name: openconnect_vpn
+	image: jakawell/openconnect-proxy:latest
+	privileged: true
+	env_file:
+		- .env
+	ports:
+		- "8888:8888"
+		- "8889:8889"
+		- "2222:22"
+	cap_add:
+		- NET_ADMIN
+	networks:
+		- mynetwork
 ```
 
 
@@ -94,9 +94,9 @@ network have access to the proxy ports.
 Let's say you have a `vpn` container defined as above, then add `network_mode` option to your other containers:
 
 ```yml
-	depends_on:
-	  - vpn
-	network_mode: "service:vpn"
+depends_on:
+	- vpn
+network_mode: "service:vpn"
 ```
 
 Keep in mind that `networks`, `extra_hosts`, etc. and `network_mode` are mutually exclusive!
@@ -127,10 +127,8 @@ You can connect to the server just as you would any SSH server. The username is 
 
 You can build the container yourself with
 
-	docker build -f build/Dockerfile -t jakawell/openconnect-proxy:custom ./build
+	docker build -f build/Dockerfile -t myimages/openconnect-proxy:local ./build
 
 # Support
 
 You like using my work? Go support the [original dev](https://github.com/wazum/openconnect-proxy#support), not me! 
-
-
