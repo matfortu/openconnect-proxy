@@ -16,8 +16,8 @@ OPENCONNECT_URL=<Gateway URL>
 OPENCONNECT_USER=<Username>
 OPENCONNECT_PASSWORD=<Password>
 OPENCONNECT_OPTIONS=--authgroup <VPN Group> \
-	--servercert <VPN Server Certificate> --protocol=<Protocol> \
-	--reconnect-timeout 86400
+  --servercert <VPN Server Certificate> --protocol=<Protocol> \
+  --reconnect-timeout 86400
 ```
 
 _Don't use quotes around the values!_
@@ -29,11 +29,11 @@ Either set the password in the `.env` file or leave the variable `OPENCONNECT_PA
 You can also use multi-factor one-time-password codes in two different ways. If your connection uses a time-based OTP (like Google Authenticator), you can provide the key, and the entrypoint will generate and provide the code whenever it tries to connect:
 
 
-	OPENCONNECT_TOTP_SECRET=<Key for TOTP>
+  OPENCONNECT_TOTP_SECRET=<Key for TOTP>
 
 Otherwise, you can generate the one-time-password yourself and pass it when you start the server:
 
-	OPENCONNECT_MFA_CODE=<Multi factor authentication code>
+  OPENCONNECT_MFA_CODE=<Multi factor authentication code>
 
 # Run container in foreground
 
@@ -41,7 +41,7 @@ To start the container in foreground run:
 
 ```sh
 docker run -it --rm --privileged --env-file=.env \
-	-p 8888:8888 -p 8889:8889 -p 2222:22 jakawell/openconnect-proxy:latest
+  -p 8888:8888 -p 8889:8889 -p 2222:22 jakawell/openconnect-proxy:latest
 ```
 
 The proxies are listening on ports 8888 (http/https), 8889 (socks), and 2222 (ssh).
@@ -50,37 +50,37 @@ Without using a `.env` file set the environment variables on the command line wi
 
 ```sh
 docker run … -e OPENCONNECT_URL=vpn.gateway.com/example \
-	-e OPENCONNECT_OPTIONS='<Openconnect Options>' \
-	-e OPENCONNECT_USER=<Username> …
+  -e OPENCONNECT_OPTIONS='<Openconnect Options>' \
+  -e OPENCONNECT_USER=<Username> …
 ```
 
 # Run container in background
 
 To start the container in daemon mode (background) set the `-d` option:
 
-	docker run -d -it --rm …
+  docker run -d -it --rm …
 
 In daemon mode you can view the stderr log with `docker logs`:
 
-	docker logs `docker ps|grep "jakawell/openconnect-proxy"|awk -F' ' '{print $1}'`
+  docker logs `docker ps|grep "jakawell/openconnect-proxy"|awk -F' ' '{print $1}'`
 
 # Use container with docker-compose
 
 ```yml
 vpn:
-	container_name: openconnect_vpn
-	image: jakawell/openconnect-proxy:latest
-	privileged: true
-	env_file:
-		- .env
-	ports:
-		- "8888:8888"
-		- "8889:8889"
-		- "2222:22"
-	cap_add:
-		- NET_ADMIN
-	networks:
-		- mynetwork
+  container_name: openconnect_vpn
+  image: jakawell/openconnect-proxy:latest
+  privileged: true
+  env_file:
+    - .env
+  ports:
+    - "8888:8888"
+    - "8889:8889"
+    - "2222:22"
+  cap_add:
+    - NET_ADMIN
+  networks:
+    - mynetwork
 ```
 
 
@@ -95,7 +95,7 @@ Let's say you have a `vpn` container defined as above, then add `network_mode` o
 
 ```yml
 depends_on:
-	- vpn
+  - vpn
 network_mode: "service:vpn"
 ```
 
@@ -111,8 +111,8 @@ For example FoxyProxy (available for Firefox, Chrome) is a suitable browser exte
 You may also set environment variables:
 
 ```sh
-	export http_proxy="http://127.0.0.1:8888/"
-	export https_proxy="http://127.0.0.1:8888/"
+  export http_proxy="http://127.0.0.1:8888/"
+  export https_proxy="http://127.0.0.1:8888/"
 ```
 
 composer, git (if you don't use the git+ssh protocol, see below) and others use these.
@@ -121,13 +121,13 @@ composer, git (if you don't use the git+ssh protocol, see below) and others use 
 
 You can connect to the server just as you would any SSH server. The username is `root` and the password is `vpnproxy`. The port is whatever you point the exposed port 22 when starting the image.
 
-	ssh root@localhost -p 2222
+  ssh root@localhost -p 2222
 
 # Build
 
 You can build the container yourself with
 
-	docker build -f build/Dockerfile -t myimages/openconnect-proxy:local ./build
+  docker build -f build/Dockerfile -t myimages/openconnect-proxy:local ./build
 
 # Support
 
