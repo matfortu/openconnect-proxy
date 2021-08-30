@@ -28,12 +28,15 @@ Either set the password in the `.env` file or leave the variable `OPENCONNECT_PA
 
 You can also use multi-factor one-time-password codes in two different ways. If your connection uses a time-based OTP (like Google Authenticator), you can provide the key, and the entrypoint will generate and provide the code whenever it tries to connect:
 
-
-  OPENCONNECT_TOTP_SECRET=<Key for TOTP>
+```sh
+OPENCONNECT_TOTP_SECRET=<Key for TOTP>
+```
 
 Otherwise, you can generate the one-time-password yourself and pass it when you start the server:
 
-  OPENCONNECT_MFA_CODE=<Multi factor authentication code>
+```sh
+OPENCONNECT_MFA_CODE=<Multi factor authentication code>
+```
 
 # Run container in foreground
 
@@ -57,12 +60,15 @@ docker run … -e OPENCONNECT_URL=vpn.gateway.com/example \
 # Run container in background
 
 To start the container in daemon mode (background) set the `-d` option:
-
-  docker run -d -it --rm …
+```sh
+docker run -d -it --rm …
+```
 
 In daemon mode you can view the stderr log with `docker logs`:
 
-  docker logs `docker ps|grep "jakawell/openconnect-proxy"|awk -F' ' '{print $1}'`
+```sh
+docker logs `docker ps|grep "jakawell/openconnect-proxy"|awk -F' ' '{print $1}'`
+```
 
 # Use container with docker-compose
 
@@ -111,8 +117,8 @@ For example FoxyProxy (available for Firefox, Chrome) is a suitable browser exte
 You may also set environment variables:
 
 ```sh
-  export http_proxy="http://127.0.0.1:8888/"
-  export https_proxy="http://127.0.0.1:8888/"
+export http_proxy="http://127.0.0.1:8888/"
+export https_proxy="http://127.0.0.1:8888/"
 ```
 
 composer, git (if you don't use the git+ssh protocol, see below) and others use these.
@@ -121,13 +127,17 @@ composer, git (if you don't use the git+ssh protocol, see below) and others use 
 
 You can connect to the server just as you would any SSH server. The username is `root` and the password is `vpnproxy`. The port is whatever you point the exposed port 22 when starting the image.
 
-  ssh root@localhost -p 2222
+```sh
+ssh root@localhost -p 2222
+```
 
 # Build
 
 You can build the container yourself with
 
-  docker build -f build/Dockerfile -t myimages/openconnect-proxy:local ./build
+```sh
+docker build -f build/Dockerfile -t myimages/openconnect-proxy:local ./build
+```
 
 # Support
 
