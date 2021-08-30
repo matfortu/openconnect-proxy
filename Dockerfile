@@ -31,12 +31,12 @@ RUN apk add --no-cache ca-certificates wget \
 
 # Use an up-to-date version of vpnc-script
 # https://www.infradead.org/openconnect/vpnc-script.html
-COPY vpnc-script /etc/vpnc/vpnc-script
+COPY build/vpnc-script /etc/vpnc/vpnc-script
 RUN chmod 755 /etc/vpnc/vpnc-script
 
-COPY tinyproxy.conf /etc/tinyproxy.conf
+COPY build/tinyproxy.conf /etc/tinyproxy.conf
 
-COPY entrypoint.sh /entrypoint.sh
+COPY build/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 8888
