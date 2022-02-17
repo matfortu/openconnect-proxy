@@ -28,7 +28,7 @@ run () {
 }
 
 until (run); do
-  echo "openconnect exited. Restarting process in 60 seconds…" >&2
-  sleep 60
+  echo "openconnect exited. Restarting process in 20 seconds…" >&2
+  sleep 20
 done
 

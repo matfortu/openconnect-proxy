@@ -20,6 +20,7 @@ RUN apk add --no-cache ca-certificates wget \
     # configure ssh server
     && apk add --no-cache openssh \
     && sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config \
+    && sed -i "s/#PubkeyAuthentication.*/PubkeyAuthentication yes/" /etc/ssh/sshd_config \
     && sed -i "s/^AllowTcpForwarding .*$/AllowTcpForwarding yes/" /etc/ssh/sshd_config \
     && echo "root:vpnproxy" | chpasswd \
     # add vpn-slice with dependencies (dig) https://github.com/dlenski/vpn-slice
