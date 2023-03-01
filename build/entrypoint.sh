@@ -20,7 +20,7 @@ run () {
   elif [[ ! -z "${OPENCONNECT_PASSWORD}" ]] && [[ ! -z "${OPENCONNECT_TOTP_SECRET}" ]]; then
   # Time-based One Time Password (TOTP, "Google Authenticator")
     OPENCONNECT_TOTP=$(oathtool -b --totp "$OPENCONNECT_TOTP_SECRET")
-    echo -e "$OPENCONNECT_PASSWORD\n$OPENCONNECT_TOTP\n" | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL
+    echo -e "$OPENCONNECT_TOTP\n$OPENCONNECT_PASSWORD\n" | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL
   elif [[ ! -z "${OPENCONNECT_PASSWORD}" ]]; then
   # Standard authentication
     echo $OPENCONNECT_PASSWORD | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL
