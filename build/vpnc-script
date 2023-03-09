@@ -241,7 +241,8 @@ if [ -n "$IPROUTE" ]; then
 
 	set_default_route() {
 		$IPROUTE route | grep '^default' | fix_ip_get_output > "$DEFAULT_ROUTE_FILE"
-		$IPROUTE route replace default dev "$TUNDEV"
+		#$IPROUTE route replace default dev "$TUNDEV"
+		$IPROUTE route add 10.0.0.0/8 dev "$TUNDEV"
 		$IPROUTE route flush cache 2>/dev/null
 	}
 
