@@ -5,6 +5,13 @@ sed "s/^Port .*$/Port 8888/" -i /etc/tinyproxy.conf
 
 /usr/local/bin/microsocks -i 0.0.0.0 -p 8889 &
 
+cat /etc/cntlm.conf.bk | sed "s/\bProxy\b/Proxy $PROXY/" | sed "s/\bProxy1\b/Proxy $PROXY1/" | sed "s/\bProxy2\b/Proxy $PROXY2/" | sed "s/\bProxy3\b/Proxy $PROXY3/" > /etc/cntlm.conf
+sed "s/\bUsername\b/Username $OPENCONNECT_USER/" -i /etc/cntlm.conf
+sed "s/\bDomain\b/Domain $DOMAIN/" -i /etc/cntlm.conf
+sed "s/\bPassword\b/Password $NTLM_PROXY_PASS/" -i /etc/cntlm.conf
+
+/usr/sbin/cntlm &
+
 run () {
   # Start openconnect
   if [[ -z "${OPENCONNECT_PASSWORD}" ]]; then
