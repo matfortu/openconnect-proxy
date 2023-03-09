@@ -20,14 +20,17 @@ RUN apk add --no-cache ca-certificates wget \
     && pip3 install https://github.com/dlenski/vpn-slice/archive/master.zip \
     # get totp tool
     && apk add --no-cache oath-toolkit-oathtool \
-    && apk del .build-deps wget
+    && apk del .build-deps wget \
+    && apk add --no-cache cntlm
 # Use an up-to-date version of vpnc-script
 # https://www.infradead.org/openconnect/vpnc-script.html
 COPY build/vpnc-script /etc/vpnc/vpnc-script
 RUN chmod 755 /etc/vpnc/vpnc-script
 COPY build/tinyproxy.conf /etc/tinyproxy.conf
 COPY build/entrypoint.sh /entrypoint.sh
+COPY build/cntlm.conf /etc/cntlm.conf.bk
 RUN chmod +x /entrypoint.sh
 EXPOSE 8888
 EXPOSE 8889
+EXPOSE 3128
 ENTRYPOINT ["/entrypoint.sh"]
