@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# setup ssh
-ssh-keygen -A
-/usr/sbin/sshd -e "$@"
-
 sed "s/^Port .*$/Port 8888/" -i /etc/tinyproxy.conf
 /usr/bin/tinyproxy -c /etc/tinyproxy.conf
 
@@ -28,6 +24,6 @@ run () {
 }
 
 until (run); do
-  echo "openconnect exited. Restarting process in 20 seconds…" >&2
-  sleep 20
+  echo "openconnect exited. Restarting process in 30 seconds…" >&2
+  sleep 30
 done
