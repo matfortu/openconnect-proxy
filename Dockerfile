@@ -1,5 +1,5 @@
 FROM alpine:latest
-MAINTAINER Wolfgang Klinger <wolfgang@wazum.com>
+
 RUN apk add --no-cache libcrypto1.1 libssl1.1 libstdc++ --repository http://dl-cdn.alpinelinux.org/alpine/edge/main
 RUN apk add --no-cache oath-toolkit-libpskc --repository http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add --no-cache nettle --repository http://dl-cdn.alpinelinux.org/alpine/edge/main
@@ -23,10 +23,10 @@ RUN apk add --no-cache ca-certificates wget \
     && apk del .build-deps wget
 # Use an up-to-date version of vpnc-script
 # https://www.infradead.org/openconnect/vpnc-script.html
-COPY vpnc-script /etc/vpnc/vpnc-script
+COPY build/vpnc-script /etc/vpnc/vpnc-script
 RUN chmod 755 /etc/vpnc/vpnc-script
-COPY tinyproxy.conf /etc/tinyproxy.conf
-COPY entrypoint.sh /entrypoint.sh
+COPY build/tinyproxy.conf /etc/tinyproxy.conf
+COPY build/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 EXPOSE 8888
 EXPOSE 8889
